@@ -149,24 +149,26 @@ public class Lista {
         return aux;
     }
 
-    public Nodo pivote() {
+    public Nodo pivote(Lista lista) {
 
         Nodo ultimo = cabeza;
         int cont = 0;
-        while (cont < size - 1) {
+        while (cont < lista.size - 1) {
             ultimo = ultimo.getSig();
             cont++;
         }
         Nodo delmedio = cabeza;
         int cont2 = 0;
-        while (cont2 < Math.round(size / 2)) {
+        while (cont2 < Math.round(lista.size / 2)) {
             delmedio = delmedio.getSig();
             cont2++;
         }
 
-        Nodo pivote = delmedio;
+        Nodo pivote;
+        if (lista.size == 1) {
+            pivote = lista.cabeza;
 
-        if (cabeza.getDato() < delmedio.getDato() && delmedio.getDato() < ultimo.getDato()) {
+        } else if (cabeza.getDato() < delmedio.getDato() && delmedio.getDato() < ultimo.getDato()) {
             pivote = delmedio;
 
         } else if (delmedio.getDato() < cabeza.getDato() && ultimo.getDato() > cabeza.getDato()) {
@@ -181,47 +183,44 @@ public class Lista {
             pivote = delmedio;
 
         }
+
         return pivote;
     }
 
-    public boolean quickSort() {
+    public boolean quickSort(Lista lista) {
 
         int cont = 0;
-        Nodo pivote = pivote();
 
-        while (cont < size) {
+        Lista izquierda = new Lista();
+        Lista derecha = new Lista();
+        Lista nueva = new Lista();
+        Nodo aux = lista.getCabeza();
+        Nodo pivote = pivote(lista);
 
-            Nodo aux = cabeza;
+        while (cont < lista.size) {
 
-            if (aux.getDato() > pivote.getDato()) {
+            if (lista.size < 2) {
+                nueva.add(aux.getDato());
+                break;
 
-                if (aux == cabeza) {
-                    Nodo temp = cabeza.getSig();
-                    pivote.getSig().setAnt(cabeza);
-                    cabeza.setSig(pivote.getSig());
-                    cabeza.setAnt(pivote);
-                    pivote.setSig(cabeza);
-                    cabeza = temp;
-                    cabeza.setAnt(null);
+            } else {
+                if (aux.getDato() > pivote.getDato()) {
+                    derecha.add(aux.getDato());
 
                 } else {
-
-                    aux.getAnt().setSig(pivote);
-                    pivote.getSig().setAnt(aux);
-                    pivote.setAnt(aux.getAnt());
-                    aux.setSig(pivote.getSig());
-                    pivote.setSig(aux);
-                    aux.setAnt(pivote);
+                    izquierda.add(aux.getDato());
 
                 }
 
-            } else {
-
+                aux = aux.getSig();
+                cont++;
+                quickSort(derecha);
+                quickSort(izquierda);
             }
 
-            cont++;
-
         }
+
+        System.out.println(nueva.toString());
 
         return true;
     }

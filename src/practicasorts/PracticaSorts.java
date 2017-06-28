@@ -12,9 +12,9 @@ public class PracticaSorts {
         lista.add(1);
         System.out.println(lista.toString());
 
-        System.out.println(lista.pivote().getDato());
-        lista.quickSort();
-        System.out.println(lista.toString());
+        lista.quickSort(lista);
+        
+
     }
 
 }
