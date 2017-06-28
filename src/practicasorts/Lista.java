@@ -114,6 +114,125 @@ public class Lista {
         return true;
     }
 
+    public Nodo getNodo(int index) {
+
+        Nodo aux = cabeza;
+
+        if (index > size || index < 0) {
+
+            throw new IndexOutOfBoundsException("Ud es un animal");
+
+        } else if (index == 0) {
+            aux = cabeza;
+
+        } else if (index == size - 1) {
+
+            Nodo ultimo = cabeza;
+            int cont2 = 0;
+            while (cont2 < size - 1) {
+                ultimo = ultimo.getSig();
+
+                cont2++;
+            }
+            aux = ultimo;
+
+        } else {
+            int cont3 = 0;
+            while (cont3 < index) {
+                aux = aux.getSig();
+                cont3++;
+
+            }
+
+        }
+
+        return aux;
+    }
+
+    public Nodo pivote() {
+
+        Nodo ultimo = cabeza;
+        int cont = 0;
+        while (cont < size - 1) {
+            ultimo = ultimo.getSig();
+            cont++;
+        }
+        Nodo delmedio = cabeza;
+        int cont2 = 0;
+        while (cont2 < Math.round(size / 2)) {
+            delmedio = delmedio.getSig();
+            cont2++;
+        }
+
+        Nodo pivote = delmedio;
+
+        if (cabeza.getDato() < delmedio.getDato() && delmedio.getDato() < ultimo.getDato()) {
+            pivote = delmedio;
+
+        } else if (delmedio.getDato() < cabeza.getDato() && ultimo.getDato() > cabeza.getDato()) {
+            pivote = cabeza;
+
+        } else if (ultimo.getDato() < delmedio.getDato() && cabeza.getDato() < ultimo.getDato()) {
+
+            pivote = ultimo;
+
+        } else {
+
+            pivote = delmedio;
+
+        }
+        return pivote;
+    }
+
+    public boolean quickSort() {
+
+        int cont = 0;
+        Nodo pivote = pivote();
+
+        while (cont < size) {
+
+            Nodo aux = cabeza;
+
+            if (aux.getDato() > pivote.getDato()) {
+
+                if (aux == cabeza) {
+                    Nodo temp = cabeza.getSig();
+                    pivote.getSig().setAnt(cabeza);
+                    cabeza.setSig(pivote.getSig());
+                    cabeza.setAnt(pivote);
+                    pivote.setSig(cabeza);
+                    cabeza = temp;
+                    cabeza.setAnt(null);
+
+                } else {
+
+                    aux.getAnt().setSig(pivote);
+                    pivote.getSig().setAnt(aux);
+                    pivote.setAnt(aux.getAnt());
+                    aux.setSig(pivote.getSig());
+                    pivote.setSig(aux);
+                    aux.setAnt(pivote);
+
+                }
+
+            } else {
+
+            }
+
+            cont++;
+
+        }
+
+        return true;
+    }
+    //                } else if (aux == ultimo) {
+//                    pivote.getAnt().setSig(aux);
+//                    aux.setAnt(pivote.getAnt());
+//                    aux.setSig(pivote);
+//                    pivote.setAnt(aux);
+//                    ultimo = pivote;
+//                    ultimo.setSig(null);
+
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
