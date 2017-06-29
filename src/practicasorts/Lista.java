@@ -238,22 +238,37 @@ public class Lista {
         Nodo pivote = pivote(lista);
 
         int cont2 = 0;
-        while (cont2 < size) {
-            Nodo temp = aux.getSig();
-            Nodo temp2 = aux2.getAnt();
+        while (cont2 < size/2+1) {
+
             Nodo izquierda = aux.getSig();
             Nodo derecha = aux2.getAnt();
             if (aux.getDato() > pivote.getDato()) {
-                if (aux2.getDato() < pivote.getDato()) {
+                if (aux2.getDato() <= pivote.getDato()) {
                     if (aux == cabeza) {
-                        cabeza.getSig().setAnt(ultimo);
-                        cabeza.setAnt(ultimo.getAnt());
-                        ultimo.getAnt().setSig(cabeza);
-                        ultimo.setSig(temp);
-                        ultimo = cabeza;
-                        cabeza = temp.getAnt();
-                        cabeza.setAnt(null);
-                        ultimo.setSig(null);
+                        if (aux2 == ultimo) {
+                            cabeza.getSig().setAnt(ultimo);
+                            cabeza.setAnt(ultimo.getAnt());
+                            ultimo.getAnt().setSig(cabeza);
+                            ultimo.setSig(izquierda);
+                            ultimo = cabeza;
+                            cabeza = izquierda.getAnt();
+                            cabeza.setAnt(null);
+                            ultimo.setSig(null);
+
+                        } else {
+                            Nodo temp3 = aux2.getSig();
+                            aux2.getSig().setAnt(aux);
+                            aux.getSig().setAnt(aux2);
+                            aux2.getAnt().setSig(aux);
+                            aux2.setSig(aux.getSig());
+                            aux.setSig(temp3);
+                            aux.setAnt(aux2.getAnt());
+
+                            cabeza = aux2;
+                            cabeza.setAnt(null);
+
+                        }
+
                         aux = izquierda;
                         aux2 = derecha;
 
@@ -271,7 +286,13 @@ public class Lista {
 
                     }
 
+                } else {
+
+                    aux2 = aux2.getAnt();
                 }
+
+            } else {
+                aux = aux.getSig();
 
             }
 
@@ -279,7 +300,7 @@ public class Lista {
         }
 
 //        System.out.println(aux.getDato());
-//        System.out.println(pivote.getDato());
+        System.out.println("este es el pivote: "+pivote.getDato());
 //        System.out.println(ultimo.getDato());
         return true;
     }
