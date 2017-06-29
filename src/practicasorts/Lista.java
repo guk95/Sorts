@@ -214,23 +214,75 @@ public class Lista {
 
                 aux = aux.getSig();
                 cont++;
-                quickSort(derecha);
-                quickSort(izquierda);
+
             }
 
         }
 
+        System.out.println(izquierda.toString());
+        System.out.println(derecha.toString());
         System.out.println(nueva.toString());
 
         return true;
     }
-    //                } else if (aux == ultimo) {
-//                    pivote.getAnt().setSig(aux);
-//                    aux.setAnt(pivote.getAnt());
-//                    aux.setSig(pivote);
-//                    pivote.setAnt(aux);
-//                    ultimo = pivote;
-//                    ultimo.setSig(null);
+
+    public boolean quickSort2(Lista lista) {
+        Nodo aux = cabeza;
+        Nodo ultimo = cabeza;
+        int cont = 0;
+        while (cont < lista.size - 1) {
+            ultimo = ultimo.getSig();
+            cont++;
+        }
+        Nodo aux2 = ultimo;
+        Nodo pivote = pivote(lista);
+
+        int cont2 = 0;
+        while (cont2 < size) {
+            Nodo temp = aux.getSig();
+            Nodo temp2 = aux2.getAnt();
+            Nodo izquierda = aux.getSig();
+            Nodo derecha = aux2.getAnt();
+            if (aux.getDato() > pivote.getDato()) {
+                if (aux2.getDato() < pivote.getDato()) {
+                    if (aux == cabeza) {
+                        cabeza.getSig().setAnt(ultimo);
+                        cabeza.setAnt(ultimo.getAnt());
+                        ultimo.getAnt().setSig(cabeza);
+                        ultimo.setSig(temp);
+                        ultimo = cabeza;
+                        cabeza = temp.getAnt();
+                        cabeza.setAnt(null);
+                        ultimo.setSig(null);
+                        aux = izquierda;
+                        aux2 = derecha;
+
+                    } else {
+                        aux2.getSig().setAnt(aux);
+                        aux.getSig().setAnt(aux2);
+                        aux.getAnt().setSig(aux2);
+                        aux2.setAnt(aux.getAnt());
+                        aux.setAnt(derecha);
+                        aux.setSig(aux2.getSig());
+                        aux2.setSig(izquierda);
+                        derecha.setSig(aux);
+                        aux = izquierda;
+                        aux2 = derecha;
+
+                    }
+
+                }
+
+            }
+
+            cont2++;
+        }
+
+//        System.out.println(aux.getDato());
+//        System.out.println(pivote.getDato());
+//        System.out.println(ultimo.getDato());
+        return true;
+    }
 
     @Override
     public String toString() {
