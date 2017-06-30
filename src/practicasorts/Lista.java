@@ -171,10 +171,10 @@ public class Lista {
         } else if (cabeza.getDato() < delmedio.getDato() && delmedio.getDato() < ultimo.getDato()) {
             pivote = delmedio;
 
-        } else if (delmedio.getDato() < cabeza.getDato() && ultimo.getDato() > cabeza.getDato()) {
+        } else if (delmedio.getDato() > cabeza.getDato() && ultimo.getDato() > cabeza.getDato()) {
             pivote = cabeza;
 
-        } else if (ultimo.getDato() < delmedio.getDato() && cabeza.getDato() < ultimo.getDato()) {
+        } else if (ultimo.getDato() < delmedio.getDato() && cabeza.getDato() > ultimo.getDato()) {
 
             pivote = ultimo;
 
@@ -185,45 +185,6 @@ public class Lista {
         }
 
         return pivote;
-    }
-
-    public boolean quickSort(Lista lista) {
-
-        int cont = 0;
-
-        Lista izquierda = new Lista();
-        Lista derecha = new Lista();
-        Lista nueva = new Lista();
-        Nodo aux = lista.getCabeza();
-        Nodo pivote = pivote(lista);
-
-        while (cont < lista.size) {
-
-            if (lista.size < 2) {
-                nueva.add(aux.getDato());
-                break;
-
-            } else {
-                if (aux.getDato() > pivote.getDato()) {
-                    derecha.add(aux.getDato());
-
-                } else {
-                    izquierda.add(aux.getDato());
-
-                }
-
-                aux = aux.getSig();
-                cont++;
-
-            }
-
-        }
-
-        System.out.println(izquierda.toString());
-        System.out.println(derecha.toString());
-        System.out.println(nueva.toString());
-
-        return true;
     }
 
     public boolean quickSort2(Lista lista) {
@@ -238,11 +199,12 @@ public class Lista {
         Nodo pivote = pivote(lista);
 
         int cont2 = 0;
-        while (cont2 < size/2+1) {
+        while (cont2 < (size / 2) + 1) {
 
             Nodo izquierda = aux.getSig();
             Nodo derecha = aux2.getAnt();
-            if (aux.getDato() > pivote.getDato()) {
+          
+            if (aux.getDato() >= pivote.getDato()) {
                 if (aux2.getDato() <= pivote.getDato()) {
                     if (aux == cabeza) {
                         if (aux2 == ultimo) {
@@ -289,19 +251,20 @@ public class Lista {
                 } else {
 
                     aux2 = aux2.getAnt();
+
                 }
 
             } else {
                 aux = aux.getSig();
 
             }
-
             cont2++;
         }
 
 //        System.out.println(aux.getDato());
-        System.out.println("este es el pivote: "+pivote.getDato());
+        System.out.println("este es el pivote: " + pivote.getDato());
 //        System.out.println(ultimo.getDato());
+
         return true;
     }
 
